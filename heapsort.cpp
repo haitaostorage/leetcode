@@ -155,7 +155,7 @@ private:
 	int max(int a,int b){
 		return a>b? a:b;
 	}
-
+	//递归的方式求大根堆的深度
 	int _deepth(Node* root){
 		if(!root){
 			return 0;
