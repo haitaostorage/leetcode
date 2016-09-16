@@ -185,6 +185,5 @@ int main()
 		i++;
 	}
 	heap.heap_sort(vect);
-	heap.display();
 	return 0;
 }
