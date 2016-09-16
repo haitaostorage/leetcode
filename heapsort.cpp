@@ -19,7 +19,7 @@ public:
 class Heap{
 public:
 	Heap():_root(NULL){}
-
+	//构建大根堆
 	void init(vector<int>& vect){
 		if(vect.empty()){
 			return;
@@ -31,19 +31,11 @@ public:
 		}
 	}
 
-	Node* get_root() const{
-		return _root;
+	//后序遍历大根堆
+	void visit(){
+		_visit(_root);	
 	}
-
-	void visit(Node* root){
-		if(root==NULL){
-			return;
-		}
-		visit(root->leftchild);
-		visit(root->rightchild);
-		cout<<"value:"<<root->elem<<endl;
-	}
-	
+	//调整大根堆
 	void change(int elem){
 		if(_root == NULL)
 			return;
@@ -53,21 +45,12 @@ public:
 		_root->elem = elem;
 		adjust(_root);
 	}
-	
-	void sort_visit(Node** root){
-		if(*root==NULL){
-			return;
-		}
-		sort_visit(&((*root)->leftchild));
-		sort_visit(&((*root)->rightchild));
-		process(root);
-	}
-
+	//堆排序接口
 	void heap_sort(vector<int>& vect){
 		init(vect);
 		sort_visit(&_root);
 	}
-
+	//显示排序后的数组
 	void display(){
 		vector<int>::iterator iter;
 		for(iter=sort.begin();iter!=sort.end();iter++){
@@ -75,10 +58,14 @@ public:
 		}
 		return;
 	}
-
+	
+	int deepth(){
+		return _deepth(_root);
+	}
 private:
 	Node* _root;
 	vector<int> sort;
+	//构建大根堆
 	void build(Node** root,Node* n){
 		if(*root==NULL){
 			*root = n;
@@ -95,7 +82,16 @@ private:
 		build(&((*root)->rightchild),n);
 		//build(&((*root)->rightchild),n);
 	}
-
+	//排序遍历
+	void sort_visit(Node** root){
+		if(*root==NULL){
+			return;
+		}
+		sort_visit(&((*root)->leftchild));
+		sort_visit(&((*root)->rightchild));
+		process(root);
+	}
+	//处理节点，将其值与根节点值交换，并释放该节点
 	void process(Node** n){
 		sort.push_back(_root->elem); 
 		_root->elem = (*n)->elem;
@@ -104,7 +100,7 @@ private:
 		adjust(_root);
 		return;
 	}
-	
+	//调整大根堆
 	void adjust(Node* root){
 		int temp;
 		if(root == NULL){
@@ -154,6 +150,26 @@ private:
 			adjust(root->rightchild);
 			return;
 		}
+	}
+
+	int max(int a,int b){
+		return a>b? a:b;
+	}
+
+	int _deepth(Node* root){
+		if(!root){
+			return 0;
+		}
+		return max(_deepth(root->leftchild)+1,_deepth(root->rightchild)+1);
+	}
+	
+	void _visit(Node* root){
+		if(root==NULL){
+			return;
+		}
+		_visit(root->leftchild);
+		_visit(root->rightchild);
+		cout<<"value:"<<root->elem<<endl;
 	}
 };
 
