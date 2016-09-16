@@ -1,5 +1,5 @@
 ALL:
-	g++ -o heapsort heapsort.cpp
-	g++ -o rotate rotate.cpp
-	g++ -o union_set union_set.cpp
+	g++ -g -o heapsort heapsort.cpp
+	g++ -g -o rotate rotate.cpp
+	g++ -g -o union_set union_set.cpp
 
