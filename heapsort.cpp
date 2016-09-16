@@ -59,8 +59,8 @@ public:
 			return;
 		}
 		sort_visit(&((*root)->leftchild));
-		process(root);
 		sort_visit(&((*root)->rightchild));
+		process(root);
 	}
 
 	void heap_sort(vector<int>& vect){
@@ -82,6 +82,7 @@ private:
 	void build(Node** root,Node* n){
 		if(*root==NULL){
 			*root = n;
+			n->parent = (Node*)((void*)root-24);
 			return;
 		}
 		if(n->elem > (*root)->elem){
@@ -98,6 +99,7 @@ private:
 	void process(Node** n){
 		sort.push_back(_root->elem); 
 		_root->elem = (*n)->elem;
+		delete *n;
 		*n = NULL;
 		adjust(_root);
 		return;
